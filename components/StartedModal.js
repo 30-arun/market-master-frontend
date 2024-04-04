@@ -120,6 +120,9 @@ function StartedModal({ show, handleClose }) {
 							>
 								<option value="Template1">Business</option>
 								<option value="Template2">Portfolio</option>
+								<option value="Template3">CleanIt</option>
+								<option value="Template4">Barber Shop</option>
+								<option value="Template5">Tech Inovations</option>
 								{/* Add more options as needed */}
 							</Form.Control>
 							<Form.Control.Feedback type="invalid">
@@ -182,6 +185,7 @@ function StartedModal({ show, handleClose }) {
 								type="file"
 								name="business_logo"
 								onChange={handleChange}
+								accept="image/*"
 								required
 							/>
 							<Form.Control.Feedback type="invalid">

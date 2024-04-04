@@ -8,6 +8,7 @@ import QrcodeModal from "./QrcodeModal";
 import ProductModal from "./ecommerce/ProductModal";
 import SeeProducts from "./SeeProducts";
 import AppointmentModal from "./AppoinmentModal";
+import SetAppointmentModal from "./SetAppoinmentModal";
 const swal = require("sweetalert2");
 
 const MySiteDetail = () => {
@@ -18,11 +19,13 @@ const MySiteDetail = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [showMModal, setShowMModal] = useState(false);
 	const [showAModal, setShowAModal] = useState(false);
+	const [showSModal, setShowSModal] = useState(false);
 	const [showPModal, setPShowModal] = useState(false);
 	const [showPSModal, setPSShowModal] = useState(false);
 	const [qrCodeData, setQrCodeData] = useState("");
 	const handleMClose = () => setShowMModal(false);
 	const handleAClose = () => setShowAModal(false);
+	const handleSClose = () => setShowSModal(false);
 	const handlePSClose = () => setPSShowModal(false);
 	const handleMShow = (id) => {
 		setShowMModal(true);
@@ -32,6 +35,9 @@ const MySiteDetail = () => {
 	};
 	const handleAShow = (id) => {
 		setShowAModal(true);
+	};
+	const handleSShow = (id) => {
+		setShowSModal(true);
 	};
 	const userId = user?.user_id || 1;
 	const { id } = router.query;
@@ -339,6 +345,32 @@ const MySiteDetail = () => {
 										<div class="card h-100">
 											<div class="card-body">
 												<h5 class="card-title">
+													Set Appointments
+												</h5>
+												<p class="card-text">
+													Manage your appointments
+													here. view upcoming
+													appointments, and manage
+													your schedule, all in one
+													place.
+												</p>
+												<a
+													href="#"
+													class="btn btn-light"
+													onClick={() =>
+														handleSShow(section.id)
+													}
+												>
+													<i class="fa-solid fa-wrench me-2"></i>
+													Set Appointments
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="card h-100">
+											<div class="card-body">
+												<h5 class="card-title">
 													Appointments
 												</h5>
 												<p class="card-text">
@@ -386,6 +418,12 @@ const MySiteDetail = () => {
 			<AppointmentModal
 				show={showAModal}
 				handleClose={handleAClose}
+				templateId={id}
+			/>
+
+			<SetAppointmentModal
+				show={showSModal}
+				handleClose={handleSClose}
 				templateId={id}
 			/>
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import AuthContext from "../../context/AuthContext";
 import { Form, Button } from "react-bootstrap";
 import ContactUs from "../../components/ContactUs";
-import BookAppointment from "../../components/BookAppointment";
+import BookApp from "../../components/BookApp";
 const swal = require("sweetalert2");
 
 export default function Preview() {
@@ -122,7 +122,7 @@ export default function Preview() {
 				<div
 					dangerouslySetInnerHTML={{ __html: section.html_content }}
 				/>
-				{section.barber && <BookAppointment id={id}/>}
+				{section.barber && <BookApp id={id}/>}
 				<ContactUs id={id} />
 				<div
 					dangerouslySetInnerHTML={{ __html: section.html_content2 }}

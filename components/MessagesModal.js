@@ -23,7 +23,7 @@ function MessagesModal({ show, handleClose, templateId }) {
 			}
 		};
 		fetchData();
-	}, [templateId]);
+	}, [templateId, show]);
 
 	const handleDeleteMessage = async (id) => {
 		try {
