@@ -99,6 +99,7 @@ const ProductModal = ({ showPModal, setPShowModal, templateId }) => {
 							id="image"
 							name="image"
 							onChange={handleFileChange}
+							accept="image/*"
 							required
 						/>
 					</div>
