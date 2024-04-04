@@ -11,7 +11,7 @@ function AppointmentModal({ show, handleClose, templateId }) {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/appointment/?template_id=${templateId}`
+					`http://127.0.0.1:8000/store/booking/?template_id=${templateId}`
 				);
 				setMessages(response.data);
 			} catch (error) {
@@ -19,7 +19,7 @@ function AppointmentModal({ show, handleClose, templateId }) {
 			}
 		};
 		fetchData();
-	}, [templateId]);
+	}, [templateId, show]);
 
 	const handleDeleteMessage = async (id) => {
 		try {
@@ -35,7 +35,7 @@ function AppointmentModal({ show, handleClose, templateId }) {
 
 			if (result.isConfirmed) {
 				await axios.delete(
-					`http://127.0.0.1:8000/store/appointment/?template_id=${templateId}&appointment_id=${id}`
+					`http://127.0.0.1:8000/store/booking/?template_id=${templateId}&booking_id=${id}`
 				);
 				const newMessages = messages.filter(
 					(message) => message.id !== id
