@@ -6,6 +6,7 @@ import gjsPresetWebpage from "grapesjs-preset-webpage";
 import grapesjsBlocksBasic from "grapesjs-blocks-basic";
 import axios from "axios";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const GrapesJSEditor = ({ templateId, userId }) => {
 	const [section, setSection] = useState({});
@@ -16,7 +17,7 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/editor-template/${userId}/${templateId}/`
+					`${baseURL}/store/editor-template/${userId}/${templateId}/`
 				);
 				// setsection section 1
 				setSection(response.data);
@@ -113,7 +114,7 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 					try {
 						if (htmlSection1) {
 							const response = await axios.put(
-								`http://127.0.0.1:8000/store/editor-template/${userId}/${templateId}/`,
+								`${baseURL}/store/editor-template/${userId}/${templateId}/`,
 								{
 									html_content1: htmlSection1.toHTML(),
 									html_content3: htmlSection3.toHTML(),

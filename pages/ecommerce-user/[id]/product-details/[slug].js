@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Header from "../../../../components/ecommerce/UserHeader";
 import Hero from "../../../../components/ecommerce/UserHero";
 import Footer from "../../../../components/ecommerce/UserFooter";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
 
 function ProductDetails() {
 	const [ploading, setpLoading] = useState(true);
@@ -69,7 +70,7 @@ function ProductDetails() {
 							<div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
 								<div className="aspect-h-4 aspect-w-3  overflow-hidden rounded-lg lg:block">
 									<img
-										src={`http://127.0.0.1:8000${product.image}`}
+										src={`${baseURL}${product.image}`}
 										alt="Two each of gray, white, and black shirts laying flat."
 										className="h-full w-full object-cover object-center"
 									/>

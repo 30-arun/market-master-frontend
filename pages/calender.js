@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 const BookingSystem = () => {
 	const [date, setDate] = useState(new Date());
 	const [time, setTime] = useState("");
@@ -68,7 +70,7 @@ const BookingSystem = () => {
 				.split(",")
 				.map((time) => time.trim());
 
-			await axios.post("http://127.0.0.1:8000/store/available-time/", {
+			await axios.post(baseURL + "/store/available-time/", {
 				user_template: 134,
 				date: formattedDate,
 				time: timesArray,
@@ -84,7 +86,7 @@ const BookingSystem = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://127.0.0.1:8000/store/available-time/?template_id=134")
+			.get(baseURL + "/store/available-time/?template_id=134")
 			.then((response) => {
 				const availableDates = response.data.reduce((acc, curr) => {
 					acc[curr.date] = curr.time;

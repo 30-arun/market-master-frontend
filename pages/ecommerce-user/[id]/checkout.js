@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Header from "../../../components/ecommerce/UserHeader";
 import Hero from "../../../components/ecommerce/UserHero";
 import Footer from "../../../components/ecommerce/UserFooter";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
 
 function Checkout() {
 	const dispatch = useDispatch();
@@ -147,7 +148,7 @@ function Checkout() {
 																href={`/ecommerce-user/${id}/product-details/${product.slug}`}
 															>
 																<Avatar
-																	img={`http://127.0.0.1:8000${product.image}`}
+																	img={`${baseURL}${product.image}`}
 																	size="lg"
 																/>
 															</Link>

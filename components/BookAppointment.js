@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const BookAppointment = ({id}) => {
 	const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const BookAppointment = ({id}) => {
 		formData["user_template"] = id;
 		try {
 			const response = axios.post(
-				"http://127.0.0.1:8000/store/appointment/",
+				baseURL + "/store/appointment/",
 				formData
 			);
 			console.log(response);

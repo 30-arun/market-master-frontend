@@ -8,11 +8,13 @@ import {
 	PRODUCT_DETAILS_FAIL,
 } from "../constants/productConstants";
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 export const listProducts = () => async (dispatch) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 
-		const { data } = await axios.get("http://127.0.0.1:8000/product/");
+		const { data } = await axios.get(baseURL + "/product/");
 
 		dispatch({
 			type: PRODUCT_LIST_SUCCESS,
@@ -34,7 +36,7 @@ export const userListProducts = (tempId) => async (dispatch) => {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 
 		const { data } = await axios.get(
-			`http://127.0.0.1:8000/product/new/?template_id=${tempId}`
+			`${baseURL}/product/new/?template_id=${tempId}`
 		);
 
 		dispatch({
@@ -57,7 +59,7 @@ export const productDetails = (slug, templateId) => async (dispatch) => {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
 		const { data } = await axios.get(
-			"http://127.0.0.1:8000/product/" + slug + "/" + templateId + "/"
+			baseURL + "/product/" + slug + "/" + templateId + "/"
 		);
 
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
@@ -77,7 +79,7 @@ export const previewProductDetails = (slug) => async (dispatch) => {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
 		const { data } = await axios.get(
-			"http://127.0.0.1:8000/product/preview/" + slug + "/"
+			baseURL + "/product/preview/" + slug + "/"
 		);
 
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });

@@ -3,12 +3,13 @@
 import React from "react";
 import { Card, Rating } from "flowbite-react";
 import Link from "next/link";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
 
 function ProductList({ product, pageId }) {
 	return (
 		<Card
 			imgAlt={product.name}
-			imgSrc={`http://127.0.0.1:8000${product.image}`}
+			imgSrc={`${baseURL}${product.image}`}
 		>
 			<Link
 				href={`/ecommerce-user/${pageId}/product-details/${product.slug}`}

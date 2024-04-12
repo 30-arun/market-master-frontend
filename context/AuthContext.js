@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 const swal = require("sweetalert2");
 
 const AuthContext = createContext();
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 
 export default AuthContext;
 
@@ -24,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const loginUser = async (email, password) => {
-		const response = await fetch("http://127.0.0.1:8000/account/login/", {
+		const response = await fetch(baseURL + "/account/login/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
 	const registerUser = async (email, name, password, password2) => {
 		const response = await fetch(
-			"http://127.0.0.1:8000/account/register/",
+			baseURL + "/account/register/",
 			{
 				method: "POST",
 				headers: {
@@ -113,7 +115,7 @@ export const AuthProvider = ({ children }) => {
 
 	const ForgotPasswordUser = async (email) => {
 		const response = await fetch(
-			"http://127.0.0.1:8000/api/user/send-reset-password-email/",
+			baseURL + "/user/send-reset-password-email/",
 			{
 				method: "POST",
 				headers: {

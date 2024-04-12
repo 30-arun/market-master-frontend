@@ -8,6 +8,7 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import ListGroup from "react-bootstrap/ListGroup";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const SetAppointmentModal = ({ show, handleClose, templateId }) => {
 	const [adminData, setAdminData] = useState({
@@ -27,7 +28,7 @@ const SetAppointmentModal = ({ show, handleClose, templateId }) => {
 	const fetchSubmittedDates = async () => {
 		try {
 			const response = await axios.get(
-				`http://127.0.0.1:8000/store/available-time/?template_id=${templateId}`
+				`${baseURL}/store/available-time/?template_id=${templateId}`
 			); // Replace with your API endpoint
 			const dates = response.data.map((item) =>
 				new Date(item.date).toDateString()
@@ -74,7 +75,7 @@ const SetAppointmentModal = ({ show, handleClose, templateId }) => {
 			);
 			const endTimeFormatted = formatTimeForBackend(adminData.endTime);
 
-			await axios.post("http://127.0.0.1:8000/store/available-time/", {
+			await axios.post(baseURL + "/store/available-time/", {
 				user_template: templateId, // Use the passed templateId
 				date: formattedDate,
 				startTime: startTimeFormatted,
@@ -125,7 +126,7 @@ const SetAppointmentModal = ({ show, handleClose, templateId }) => {
 
 			if (result.isConfirmed) {
 				await axios.delete(
-					`http://127.0.0.1:8000/store/available-time/?template_id=${templateId}&available_time_id=${id}`
+					`${baseURL}/store/available-time/?template_id=${templateId}&available_time_id=${id}`
 				);
 				const newAppointments = appointments.filter(
 					(appointment) => appointment.id !== id

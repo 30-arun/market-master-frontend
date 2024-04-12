@@ -6,6 +6,8 @@ import AuthContext from "../../context/AuthContext";
 import ContactUs from "../../components/ContactUs";
 const swal = require("sweetalert2");
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 export default function Preview() {
 	const { user } = useContext(AuthContext);
 	const router = useRouter();
@@ -20,7 +22,7 @@ export default function Preview() {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/templates/${id}/`
+					`${baseURL}/store/templates/${id}/`
 				);
 				setSection(response.data);
 			} catch (error) {

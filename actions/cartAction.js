@@ -5,9 +5,11 @@ import {
 	CART_SAVE_SHIPPING,
 } from "../constants/cartConstants";
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 export const addToCart = (slug, qty, id) => async (dispatch, getState) => {
 	const { data } = await axios.get(
-		`http://127.0.0.1:8000/product/${slug}/${id}/`
+		`${baseURL}/product/${slug}/${id}/`
 	);
 	dispatch({
 		type: CART_ADD_ITEM,

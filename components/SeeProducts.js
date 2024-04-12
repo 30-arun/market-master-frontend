@@ -7,6 +7,8 @@ import axios from "axios";
 // import AuthContext from "../context/AuthContext";
 // import { useRouter } from "next/router";
 const swal = require("sweetalert2");
+const baseAPIURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
 
 function SeeProducts({ show, handleClose, templateId }) {
 	const [messages, setMessages] = useState([]);
@@ -15,7 +17,7 @@ function SeeProducts({ show, handleClose, templateId }) {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/product/new/?template_id=${templateId}`
+					`${baseAPIURL}/product/new/?template_id=${templateId}`
 				);
 				setMessages(response.data);
 			} catch (error) {
@@ -39,7 +41,7 @@ function SeeProducts({ show, handleClose, templateId }) {
 
 			if (result.isConfirmed) {
 				await axios.delete(
-					`http://127.0.0.1:8000/product/new/?template_id=${templateId}&product_id=${id}`
+					`${baseAPIURL}/product/new/?template_id=${templateId}&product_id=${id}`
 				);
 				const newMessages = messages.filter(
 					(message) => message._id !== id
@@ -101,7 +103,7 @@ function SeeProducts({ show, handleClose, templateId }) {
 										<div className="row">
 											<div className="col-sm-6">
 												<img
-													src={`http://127.0.0.1:8000${message.image}`}
+													src={`${baseURL}${message.image}`}
 													className="img-fluid"
 													alt="product"
 													style={{

@@ -3,6 +3,7 @@ import QRCode from "qrcode.react";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 export default function Qrcode() {
 	const [url, setUrl] = useState("");
@@ -18,7 +19,7 @@ export default function Qrcode() {
 			setGenerate(true);
 			try {
 				const response = await axios.post(
-					"http://127.0.0.1:8000/store/qrcode-history/",
+					baseURL + "/store/qrcode-history/",
 					{
 						user: user_id,
 						url: url,

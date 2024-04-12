@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import AuthContext from "../../context/AuthContext";
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 export default function Hero() {
 	const router = useRouter();
@@ -18,7 +19,7 @@ export default function Hero() {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/editor-template/${userId}/${id}/`
+					`${baseURL}/store/editor-template/${userId}/${id}/`
 				);
 				setSection(response.data);
 			} catch (error) {

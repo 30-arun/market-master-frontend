@@ -5,6 +5,9 @@ import { useRouter } from "next/router";
 import axios from "axios";
 const swal = require("sweetalert2");
 
+const baseAPIURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
+
 export default function Templates({ loggedIn }) {
   const [templates, setTemplates] = useState([]);
 
@@ -15,7 +18,7 @@ export default function Templates({ loggedIn }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/store/templates/"
+          baseAPIURL+"/store/templates/"
         );
         setTemplates(response.data);
       } catch (error) {
@@ -28,7 +31,7 @@ export default function Templates({ loggedIn }) {
   const handleAddTemp = async (id) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/store/post-user-template/",
+        baseAPIURL + "/store/post-user-template/",
         {
           user: user?.user_id || 1,
           template: id,
@@ -99,7 +102,7 @@ export default function Templates({ loggedIn }) {
                     {template.image ? (
                       <>
                         <img
-                          src={`http://127.0.0.1:8000${template.image}`}
+                          src={`${baseURL}${template.image}`}
                           className="card-img-top"
                           alt={`Template ${template.title}`}
                           style={{

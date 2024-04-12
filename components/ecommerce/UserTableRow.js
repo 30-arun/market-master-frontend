@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../../actions/cartAction';
 import Link from 'next/link';
 
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
+
 function TableRow(props) {
     const product = props.product
     const dispatch = useDispatch()
@@ -19,7 +21,7 @@ function TableRow(props) {
 				className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 			>
 				<Avatar
-					img={`http://127.0.0.1:8000${product.image}`}
+					img={`${baseURL}${product.image}`}
 					size="lg"
 					// className='float-left'
 				/>

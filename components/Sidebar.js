@@ -5,6 +5,7 @@ import { useSidebar } from "../context/SidebarContext";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import axios from "axios";
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const Sidebar = ({ isSidebarActive, toggleSidebar }) => {
 	const router = useRouter();
@@ -21,7 +22,7 @@ const Sidebar = ({ isSidebarActive, toggleSidebar }) => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/user-template/${userId}/`
+					`${baseURL}/store/user-template/${userId}/`
 				); // Replace with your API endpoint
 				setDropdownLinks(response.data);
 				console.log(response.data);

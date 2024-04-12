@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 export default function Footer() {
 	const router = useRouter();
 	const [section, setSection] = useState({});
@@ -14,7 +16,7 @@ export default function Footer() {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/templates/${id}/`
+					`${baseURL}/store/templates/${id}/`
 				);
 				setSection(response.data);
 			} catch (error) {

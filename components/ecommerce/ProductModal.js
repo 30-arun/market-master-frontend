@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const ProductModal = ({ showPModal, setPShowModal, templateId }) => {
 	const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const ProductModal = ({ showPModal, setPShowModal, templateId }) => {
 		data.append("user_template", templateId);
 		try {
 			const response = await axios.post(
-				`http://127.0.0.1:8000/product/new/`,
+				`${baseURL}/product/new/`,
 				data,
 				{
 					headers: {

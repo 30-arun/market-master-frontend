@@ -6,6 +6,7 @@ import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { useRouter } from "next/router";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 function StartedModal({ show, handleClose }) {
 	const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ function StartedModal({ show, handleClose }) {
 			});
 			formDataToSend.append("user", userId);
 			const response = await axios.post(
-				"http://127.0.0.1:8000/store/get-started/",
+				baseURL + "/store/get-started/",
 				formDataToSend,
 				{
 					headers: {

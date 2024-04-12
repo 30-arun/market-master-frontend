@@ -3,6 +3,7 @@ import axios from "axios";
 import QRCode from "qrcode.react";
 import AuthContext from "../context/AuthContext";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 export default function QrcodeHistory() {
 	const [history, setHistory] = useState([]);
@@ -19,7 +20,7 @@ export default function QrcodeHistory() {
 		setLoading(true);
 		try {
 			const response = await axios.get(
-				`http://127.0.0.1:8000/store/qrcode-history/?user_id=${userId}`
+				`${baseURL}/store/qrcode-history/?user_id=${userId}`
 			);
 			setHistory(response.data);
 		} catch (error) {
@@ -44,7 +45,7 @@ export default function QrcodeHistory() {
 
 			if (confirmed.isConfirmed) {
 				const response = await axios.delete(
-					`http://127.0.0.1:8000/store/qrcode-history/?user_id=${userId}&qrcode_id=${id}`
+					`${baseURL}/store/qrcode-history/?user_id=${userId}&qrcode_id=${id}`
 				);
 				setHistory(history.filter((item) => item.id !== id));
 				swal.fire("Deleted!", response.data.message, "success");

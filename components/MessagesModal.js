@@ -7,6 +7,8 @@ import axios from "axios";
 // import AuthContext from "../context/AuthContext";
 // import { useRouter } from "next/router";
 const swal = require("sweetalert2");
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 
 function MessagesModal({ show, handleClose, templateId }) {
 	const [messages, setMessages] = useState([]);
@@ -15,7 +17,7 @@ function MessagesModal({ show, handleClose, templateId }) {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`http://127.0.0.1:8000/store/contact/?template_id=${templateId}`
+					`${baseURL}/store/contact/?template_id=${templateId}`
 				);
 				setMessages(response.data);
 			} catch (error) {
@@ -39,7 +41,7 @@ function MessagesModal({ show, handleClose, templateId }) {
 
 			if (result.isConfirmed) {
 				await axios.delete(
-					`http://127.0.0.1:8000/store/contact/?template_id=${templateId}&contact_id=${id}`
+					`${baseURL}/store/contact/?template_id=${templateId}&contact_id=${id}`
 				);
 				const newMessages = messages.filter(
 					(message) => message.id !== id

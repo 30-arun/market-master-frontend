@@ -15,6 +15,7 @@ import Footer from "../../components/Footer";
 import { useRouter } from 'next/router';
 import AuthContext from '../../context/AuthContext';
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const domain = process.env.NEXT_PUBLIC_API_DOMAIN_NAME;
 
@@ -54,7 +55,7 @@ export default function Home() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/store/website/${userId}/${id}/`);
+        const response = await axios.get(`${baseURL}/store/website/${userId}/${id}/`);
         setSection(response.data);
       }
       catch (error) {
@@ -156,7 +157,7 @@ const getCategories = (setCategories) => {
     },
   };
 
-  const categories_url = domain + "store/categories/";
+  const categories_url = baseURL + "/store/categories/";
   axios
     .get(categories_url, config)
     .then(async (res) => {
@@ -175,7 +176,7 @@ const getCollections = (setCollections) => {
     },
   };
 
-  const collections_url = domain + "store/collections/";
+  const collections_url = baseURL + "/store/collections/";
   axios
     .get(collections_url, config)
     .then(async (res) => {

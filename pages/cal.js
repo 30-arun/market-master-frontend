@@ -4,6 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 const swal = require("sweetalert2");
 import moment from "moment";
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 const BookApp = () => {
 	const [apiData, setApiData] = useState([]);
@@ -21,7 +22,7 @@ const BookApp = () => {
 			setIsLoading(true);
 			try {
 				const response = await axios.get(
-					"http://127.0.0.1:8000/store/available-time/?template_id=136"
+					baseURL + "/store/available-time/?template_id=136"
 				);
 				const dataWithUTCDate = response.data.map((item) => ({
 					...item,
@@ -60,7 +61,7 @@ const BookApp = () => {
 		const postData = async () => {
 			try {
 				const response = await axios.post(
-					"http://127.0.0.1:8000/store/booking/",
+					baseURL + "/store/booking/",
 					{
 						user_template: 136,
 						name,
