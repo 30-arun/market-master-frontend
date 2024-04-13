@@ -166,7 +166,7 @@ function MessagesModal({ show, handleClose, templateId }) {
                     <div className="bg-light p-3 rounded mt-2">
                       {message.replied ? (
                         <div>
-                          <strong>Reply Message: </strong>
+                          <strong>Replied Message: </strong>
                           {message.replied_message}
                         </div>
                       ) : (
