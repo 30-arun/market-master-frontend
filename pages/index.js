@@ -38,9 +38,45 @@ export default function Index() {
         />
         <style>
           {`
-                    #faqse .collapse {
-                        visibility: visible !important;
-                            }
+            #faqse .collapse {
+              visibility: visible !important;
+            }
+            
+            .btn-primary {
+							background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+							border: none;
+							transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+						}
+
+						.btn-primary:hover {
+							transform: translateY(-2px);
+							box-shadow: 0 10px 20px rgba(0, 123, 255, 0.25);
+						}
+
+						.btn-primary:active {
+							transform: translateY(1px);
+						}
+
+						.button-text {
+							display: inline-block;
+							position: relative;
+							transition: all 0.3s ease;
+						}
+
+						.button-text::after {
+							content: '';
+							position: absolute;
+							height: 2px;
+							background-color: #fff;
+							width: 0;
+							bottom: -3px;
+							left: 0;
+							transition: width 0.3s ease;
+						}
+
+						.btn-primary:hover .button-text::after {
+							width: 100%;
+						}
                     
                     `}
         </style>
@@ -56,12 +92,17 @@ export default function Index() {
                 website builder. No coding required!
               </p>
               {user ? (
-                <a onClick={handleShow} class="btn btn-light btn-lg">
-                  Get Started
+                <a
+                  onClick={handleShow}
+                  class="btn btn-lg btn-primary px-4 me-md-2"
+                >
+                  <span class="button-text">Get Started</span>
                 </a>
               ) : (
                 <Link href="/login">
-                  <a class="btn btn-light btn-lg">Get Started</a>
+                  <a class="btn btn-lg btn-primary px-4 me-md-2">
+                    <span class="button-text">Get Started</span>
+                  </a>
                 </Link>
               )}
             </div>

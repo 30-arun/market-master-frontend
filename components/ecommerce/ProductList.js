@@ -37,6 +37,15 @@ function ProductList({ product, pageId }) {
 					</p>
 				</Link>
 			</div>
+			<Link href={`/ecommerce/${pageId}/cart/${product.slug}?qty=1`}>
+				<Button
+					className="w-full bg-cyan-700"
+					title="Please Add Template"
+					disabled
+				>
+					Add to Cart
+				</Button>
+			</Link>
 		</Card>
 	);
 }
