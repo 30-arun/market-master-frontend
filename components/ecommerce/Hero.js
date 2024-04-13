@@ -45,7 +45,7 @@ export default function Hero() {
 					name="description"
 					content="Market Master is an e-commerce that sells high quality linen and cotton clothing, and that specializes in Caribbean guayaberas and guayamisas"
 				/>
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" href="/logos/favicon.ico" />
 				<meta property="og:title" content="Market Master" />
 				<meta
 					property="og:description"
