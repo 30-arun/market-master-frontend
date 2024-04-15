@@ -16,13 +16,13 @@ const AddCustomDomainModal = ({ show, handleClose, templateId }) => {
       id: 1,
       type: "A",
       name: "@",
-      value: "12.31.23.32",
+      value: process.env.NEXT_PUBLIC_SERVER_IP,
     },
     {
       id: 2,
       type: "A",
       name: "www",
-      value: "12.12.12.12",
+      value: process.env.NEXT_PUBLIC_SERVER_IP,
     },
   ];
 
