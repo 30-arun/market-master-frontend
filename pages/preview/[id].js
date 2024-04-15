@@ -6,8 +6,6 @@ import AuthContext from "../../context/AuthContext";
 import ContactUs from "../../components/ContactUs";
 const swal = require("sweetalert2");
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
-
 export default function Preview() {
   const { user } = useContext(AuthContext);
   const router = useRouter();
@@ -21,7 +19,9 @@ export default function Preview() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/store/templates/${id}/`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/store/templates/${id}/`
+        );
         setSection(response.data);
       } catch (error) {
         console.error("There was an error!", error);
@@ -34,7 +34,13 @@ export default function Preview() {
   }, [router.isReady, id, userId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (!id) {
@@ -48,7 +54,7 @@ export default function Preview() {
           name="description"
           content="Market Master is an e-commerce that sells high quality linen and cotton clothing, and that specializes in Caribbean guayaberas and guayamisas"
         />
-        <link rel="icon" href="/logos/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content="Market Master" />
         <meta
           property="og:description"

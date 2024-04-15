@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const DashboardInfo = ({ toggleSidebar }) => {
 	const [profile, setProfile] = useState("");
@@ -38,7 +38,13 @@ const DashboardInfo = ({ toggleSidebar }) => {
 	}, [isLoading, user, router]);
 
 	if (isLoading) {
-		return <div>Loading...</div>; // Or any other loading indicator
+		return (
+			<div class="d-flex justify-content-center">
+				<div class="spinner-grow" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		); // Or any other loading indicator
 	}
 
 	return (

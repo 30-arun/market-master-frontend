@@ -6,9 +6,6 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import MessagesModal from "./MessagesModal";
 const swal = require("sweetalert2");
-const baseAPIURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
-const frontendURL = process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000";
 
 export default function MySite() {
   const [templates, setTemplates] = useState([]);
@@ -31,7 +28,7 @@ export default function MySite() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseAPIURL}/store/user-template/${userId}/`
+          `${process.env.NEXT_PUBLIC_API_URL}/store/user-template/${userId}/`
         );
         setTemplates(response.data);
         setIsLoading(false);
@@ -58,7 +55,7 @@ export default function MySite() {
 
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `${baseAPIURL}/store/user-template-detail/${userId}/${id}/`
+          `${process.env.NEXT_PUBLIC_API_URL}/store/user-template-detail/${userId}/${id}/`
         );
         console.log(response.data);
         setTemplates(templates.filter((template) => template.id !== id));
@@ -86,7 +83,13 @@ export default function MySite() {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -117,7 +120,7 @@ export default function MySite() {
                   <img
                     src={
                       template.image
-                        ? `${baseURL}${template.image}`
+                        ? `${process.env.NEXT_PUBLIC_BASE_URL_NAME}${template.image}`
                         : "https://via.placeholder.com/150"
                     }
                     className="card-img-top cursor-pointer"
@@ -147,11 +150,15 @@ export default function MySite() {
                       <span className="badge bg-info pt-2">Ecommerce</span>
                     )}
                     {template.ecommerce ? (
-                      <Link href={`/ecommerce-user/${template.id}`}>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_API_PROTOCOL}://${template.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`}
+                      >
                         <a className="btn btn-light btn-sm">Preview</a>
                       </Link>
                     ) : (
-                      <Link href={`/user-preview/${template.id}`}>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_API_PROTOCOL}://${template.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`}
+                      >
                         <a className="btn btn-light btn-sm">Preview</a>
                       </Link>
                     )}
@@ -180,7 +187,7 @@ export default function MySite() {
                           }}
                           onClick={() =>
                             handleQrCode(
-                              `${frontendURL}/ecommerce-user/${template.id}/`
+                              `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${template.slug}.${process.env.NEXT_PUBLIC_FRONTEND_URL}/`
                             )
                           }
                         >
@@ -197,7 +204,7 @@ export default function MySite() {
                           }}
                           onClick={() =>
                             handleQrCode(
-                              `${frontendURL}/user-preview/${template.id}/`
+                              `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${template.slug}.${process.env.NEXT_PUBLIC_FRONTEND_URL}/`
                             )
                           }
                         >

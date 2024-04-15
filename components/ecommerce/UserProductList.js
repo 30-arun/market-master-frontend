@@ -3,12 +3,14 @@
 import React from "react";
 import { Card, Rating } from "flowbite-react";
 import Link from "next/link";
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
 
 function ProductList({ product, pageId }) {
-	return (
-    <Card imgAlt={product.name} imgSrc={`${baseURL}${product.image}`}>
-      <Link href={`/ecommerce-user/${pageId}/product-details/${product.slug}`}>
+  return (
+    <Card
+      imgAlt={product.name}
+      imgSrc={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${product.image}`}
+    >
+      <Link href={`/e/product-details/${product.slug}`}>
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white p-0 my-0 cursor-pointer">
           <p>{product.name}</p>
         </h5>
@@ -30,15 +32,13 @@ function ProductList({ product, pageId }) {
         <span className="text-xl font-bold text-gray-900 p-0 mb-3">
           ${product.price}
         </span>
-        <Link
-          href={`/ecommerce-user/${pageId}/product-details/${product.slug}`}
-        >
+        <Link href={`/e/product-details/${product.slug}`}>
           <p className="rounded-lg cursor-pointer bg-cyan-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
             More Details
           </p>
         </Link>
       </div>
-      <Link href={`/ecommerce-user/${pageId}/cart/${product.slug}?qty=1`}>
+      <Link href={`/e/cart/${product.slug}?qty=1`}>
         <p className="rounded-lg cursor-pointer bg-cyan-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
           Add to Cart
         </p>

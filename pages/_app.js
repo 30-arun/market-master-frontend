@@ -7,35 +7,41 @@ import { AuthProvider } from "../context/AuthContext";
 import { Provider } from "react-redux";
 import store from "../utils/store";
 import { SidebarProvider } from "../context/SidebarContext";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
 
 function MyApp({ Component, pageProps }) {
+	
 	return (
 		<SSRProvider>
 			<Provider store={store}>
-				<SidebarProvider>
-					<AuthProvider>
-						<Layout>
-							<Head>
-								<title>Market Master</title>
-								<link
-									rel="shortcut icon"
-									href="/logos/favicon.ico"
-									type="image/x-icon"
-								/>
-								<link
-									rel="stylesheet"
-									href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-								/>
+				<QueryClientProvider client={queryClient}>
+					<SidebarProvider>
+						<AuthProvider>
+							<Layout>
+								<Head>
+									<title>Market Master</title>
+									<link
+										rel="shortcut icon"
+										href="/logos/favicon.ico"
+									/>
+									<link
+										rel="stylesheet"
+										href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+									/>
 
-								<script
-									src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
-									defer
-								></script>
-							</Head>
-							<Component {...pageProps} />
-						</Layout>
-					</AuthProvider>
-				</SidebarProvider>
+									<script
+										src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+										defer
+									></script>
+								</Head>
+								<Component {...pageProps} />
+							</Layout>
+						</AuthProvider>
+					</SidebarProvider>
+				</QueryClientProvider>
 			</Provider>
 		</SSRProvider>
 	);

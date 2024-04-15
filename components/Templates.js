@@ -5,24 +5,25 @@ import { useRouter } from "next/router";
 import axios from "axios";
 const swal = require("sweetalert2");
 
-const baseAPIURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
-
 export default function Templates({ loggedIn }) {
   const [templates, setTemplates] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const history = useRouter();
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
-          baseAPIURL+"/store/templates/"
+          `${process.env.NEXT_PUBLIC_API_URL}/store/templates/`
         );
         setTemplates(response.data);
       } catch (error) {
         console.error("There was an error!", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -31,7 +32,7 @@ export default function Templates({ loggedIn }) {
   const handleAddTemp = async (id) => {
     try {
       const response = await axios.post(
-        baseAPIURL + "/store/post-user-template/",
+        `${process.env.NEXT_PUBLIC_API_URL}/store/post-user-template/`,
         {
           user: user?.user_id || 1,
           template: id,
@@ -58,6 +59,19 @@ export default function Templates({ loggedIn }) {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <h1 className="my-5">Templates</h1>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (templates.length === 0) {
     return (
       <div className="text-center mt-5">
@@ -66,28 +80,6 @@ export default function Templates({ loggedIn }) {
       </div>
     );
   }
-
-  // const templates = [
-  //     {
-  //         id: "1",
-  //         title: "Modern Business Suite",
-  //         imageUrl: "./t2.webp",
-  //         description: "Sleek, professional layout for businesses, featuring dynamic portfolio, intuitive navigation, and integrated contact solutions."
-  //     },
-  //     {
-  //         id: "2",
-  //         title: "Tech Innovator",
-  //         imageUrl: "./t1.webp",
-  //         description: "Cutting-edge, interactive design for tech startups, emphasizing product showcases, innovation timelines, and bold graphics."
-  //     },
-  //     {
-  //         id: "3",
-  //         title: "Urban Real Estate",
-  //         imageUrl: "./t3.webp",
-  //         description: "Elegant, clean template for real estate, with advanced property search, interactive maps, and detailed listings."
-  //     },
-  //     // Add more templates as needed
-  // ];
 
   return (
     <>
@@ -102,7 +94,7 @@ export default function Templates({ loggedIn }) {
                     {template.image ? (
                       <>
                         <img
-                          src={`${baseURL}${template.image}`}
+                          src={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${template.image}`}
                           className="card-img-top"
                           alt={`Template ${template.title}`}
                           style={{

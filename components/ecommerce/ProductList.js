@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, Rating } from "flowbite-react";
+import { Card, Rating, Button } from "flowbite-react";
 import Link from "next/link";
 
 function ProductList({ product, pageId }) {

@@ -9,12 +9,8 @@ import ProductModal from "./ecommerce/ProductModal";
 import SeeProducts from "./SeeProducts";
 import AppointmentModal from "./AppoinmentModal";
 import SetAppointmentModal from "./SetAppoinmentModal";
+import PublishModal from "./PublishModal";
 const swal = require("sweetalert2");
-const baseAPIURL =
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000";
-const frontendURL =
-  process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000";
 
 const MySiteDetail = () => {
   const { user } = useContext(AuthContext);
@@ -27,11 +23,13 @@ const MySiteDetail = () => {
   const [showSModal, setShowSModal] = useState(false);
   const [showPModal, setPShowModal] = useState(false);
   const [showPSModal, setPSShowModal] = useState(false);
+  const [showPublishModal, setShowPublishModal] = useState(false);
   const [qrCodeData, setQrCodeData] = useState("");
   const handleMClose = () => setShowMModal(false);
   const handleAClose = () => setShowAModal(false);
   const handleSClose = () => setShowSModal(false);
   const handlePSClose = () => setPSShowModal(false);
+  const handlePublishClose = () => setShowPublishModal(false);
   const handleMShow = (id) => {
     setShowMModal(true);
   };
@@ -53,7 +51,7 @@ const MySiteDetail = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseAPIURL}/store/editor-template/${userId}/${id}/`
+          `${process.env.NEXT_PUBLIC_API_URL}/store/editor-template/${userId}/${id}/`
         );
         setSection(response.data);
       } catch (error) {
@@ -80,7 +78,7 @@ const MySiteDetail = () => {
 
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `${baseAPIURL}/store/user-template-detail/${userId}/${id}/`
+          `${process.env.NEXT_PUBLIC_API_URL}/store/user-template-detail/${userId}/${id}/`
         );
         console.log(response.data);
         router.push("/mysite");
@@ -108,7 +106,13 @@ const MySiteDetail = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (!id) {
@@ -127,7 +131,7 @@ const MySiteDetail = () => {
                     <img
                       src={
                         section.image
-                          ? `${baseURL}${section.image}`
+                          ? `${process.env.NEXT_PUBLIC_BASE_URL_NAME}${section.image}`
                           : "https://via.placeholder.com/150"
                       }
                       class="img-fluid rounded"
@@ -153,20 +157,19 @@ const MySiteDetail = () => {
                       <p class="card-text">{section.description}</p>
                       <h6>
                         Site URL :{" "}
-                        <Link
+                        <a
                           href={
                             section.ecommerce
-                              ? `/ecommerce-user/${section.id}`
-                              : `/user-preview/${section.id}`
+                              ? `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`
+                              : `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`
                           }
+                          target="_blank"
                         >
-                          <a href="#">
-                            {section.ecommerce
-                              ? `${frontendURL}/ecommerce-user/${section.id}`
-                              : `${frontendURL}/user-preview/${section.id}`}
-                            <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                          </a>
-                        </Link>
+                          {section.ecommerce
+                            ? `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`
+                            : `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`}
+                          <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                        </a>
                       </h6>
                       <p class="card-text mt-auto">
                         <small class="text-muted mt-auto">
@@ -195,11 +198,7 @@ const MySiteDetail = () => {
                       |
                       <div class="col-3">
                         <Link
-                          href={
-                            section.ecommerce
-                              ? `/ecommerce-user/${section.id}`
-                              : `/user-preview/${section.id}`
-                          }
+                          href={`${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`}
                         >
                           <button class="btn btn-light w-100">
                             <i class="fa-solid fa-eye me-2"></i>
@@ -259,12 +258,31 @@ const MySiteDetail = () => {
                       class="btn btn-light"
                       onClick={() =>
                         handleQrCode(
-                          `${frontendURL}/user-preview/${section.id}/`
+                          `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${section.slug}.${process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME}/`
                         )
                       }
                     >
                       <i class="fa-solid fa-qrcode me-2"></i>
                       Qrcode Link
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Publish Site</h5>
+                    <p class="card-text">
+                      Share your site with the world. Click here to publish your
+                      site and make it available to everyone.
+                    </p>
+                    <a
+                      href="#"
+                      class="btn btn-light"
+                      onClick={() => setShowPublishModal(true)}
+                    >
+                      <i class="fa-solid fa-upload me-2"></i>
+                      Publish Site
                     </a>
                   </div>
                 </div>
@@ -369,6 +387,11 @@ const MySiteDetail = () => {
         showModal={showModal}
         setShowModal={() => setShowModal(false)}
         qrCodeData={qrCodeData}
+      />
+      <PublishModal
+        show={showPublishModal}
+        handleClose={handlePublishClose}
+        templateId={id}
       />
       <MessagesModal
         show={showMModal}

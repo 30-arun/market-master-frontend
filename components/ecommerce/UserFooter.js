@@ -1,46 +1,40 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
-import AuthContext from "../../context/AuthContext";
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 export default function Footer() {
-	const router = useRouter();
-	const { user } = useContext(AuthContext);
-	const [section, setSection] = useState({});
-	const [loading, setLoading] = useState(true);
-	const userId = user?.user_id || 1;
-	const { id } = router.query;
+  const [section, setSection] = useState({});
+  const [loading, setLoading] = useState(true);
+  const subdomain = window.location.hostname.split(".")[0];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/store/slug/${subdomain}/`
+        );
+        setSection(response.data);
+      } catch (error) {
+        console.error("There was an error!", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-	useEffect(() => {
-		if (!router.isReady || !id) return;
+    fetchData();
+  }, []);
 
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(
-					`${baseURL}/store/editor-template/${userId}/${id}/`
-				);
-				setSection(response.data);
-			} catch (error) {
-				console.error("There was an error!", error);
-			} finally {
-				setLoading(false);
-			}
-		};
+  if (loading) {
+    return (
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
-		fetchData();
-	}, [router.isReady, id, userId]);
-
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
-	if (!id) {
-		return <div>Error: Template ID is missing.</div>;
-	}
-	return (
-		<div>
-			<div dangerouslySetInnerHTML={{ __html: section.html_content3 }} />
-		</div>
-	);
+  return (
+    <div>
+      <div dangerouslySetInnerHTML={{ __html: section.html_content3 }} />
+    </div>
+  );
 }

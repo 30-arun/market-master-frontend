@@ -40,7 +40,13 @@ function ProductDetails() {
 	};
 
 	if (ploading) {
-		return <div>Loading...</div>;
+		return (
+			<div class="d-flex justify-content-center">
+				<div class="spinner-grow" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		);
 	}
 
 	if (!slug) {

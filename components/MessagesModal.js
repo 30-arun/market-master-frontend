@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 const swal = require("sweetalert2");
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 function MessagesModal({ show, handleClose, templateId }) {
   const [messages, setMessages] = useState([]);
@@ -17,7 +16,7 @@ function MessagesModal({ show, handleClose, templateId }) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${baseURL}/store/contact/?template_id=${templateId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/store/contact/?template_id=${templateId}`
       );
       setMessages(response.data);
     } catch (error) {
@@ -39,7 +38,7 @@ function MessagesModal({ show, handleClose, templateId }) {
 
       if (result.isConfirmed) {
         await axios.delete(
-          `http://127.0.0.1:8000/store/contact/?template_id=${templateId}&contact_id=${id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/store/contact/?template_id=${templateId}&contact_id=${id}`
         );
         const newMessages = messages.filter((message) => message.id !== id);
         setMessages(newMessages);
@@ -68,10 +67,13 @@ function MessagesModal({ show, handleClose, templateId }) {
     setReplyLoading(true);
     try {
       // Post the reply to the backend
-      await axios.post(`${baseURL}/store/contact-replied/`, {
-        contact_id: id,
-        replied_message: replies,
-      });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/store/contact-replied/`,
+        {
+          contact_id: id,
+          replied_message: replies,
+        }
+      );
       swal.fire(
         "Message Reply Sent!",
         "Your reply has been sent successfully.",
