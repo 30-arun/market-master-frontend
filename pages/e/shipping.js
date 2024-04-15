@@ -192,7 +192,7 @@ function Shipping() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
                           <Avatar
-                            img={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${product.image}`}
+                            img={`${process.env.NEXT_PUBLIC_BASE_URL}${product.image}`}
                             size="md"
                             // className='float-left'
                           />

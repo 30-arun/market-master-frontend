@@ -126,7 +126,7 @@ function Checkout() {
                             >
                               <Link href={`/e/product-details/${product.slug}`}>
                                 <Avatar
-                                  img={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${product.image}`}
+                                  img={`${process.env.NEXT_PUBLIC_BASE_URL}${product.image}`}
                                   size="lg"
                                 />
                               </Link>

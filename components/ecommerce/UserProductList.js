@@ -8,7 +8,7 @@ function ProductList({ product, pageId }) {
   return (
     <Card
       imgAlt={product.name}
-      imgSrc={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${product.image}`}
+      imgSrc={`${process.env.NEXT_PUBLIC_BASE_URL}${product.image}`}
     >
       <Link href={`/e/product-details/${product.slug}`}>
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white p-0 my-0 cursor-pointer">

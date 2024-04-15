@@ -131,7 +131,7 @@ const MySiteDetail = () => {
                     <img
                       src={
                         section.image
-                          ? `${process.env.NEXT_PUBLIC_BASE_URL_NAME}${section.image}`
+                          ? `${process.env.NEXT_PUBLIC_BASE_URL}${section.image}`
                           : "https://via.placeholder.com/150"
                       }
                       class="img-fluid rounded"

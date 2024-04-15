@@ -95,7 +95,7 @@ function SeeProducts({ show, handleClose, templateId }) {
                     <div className="row">
                       <div className="col-sm-6">
                         <img
-                          src={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${message.image}`}
+                          src={`${process.env.NEXT_PUBLIC_BASE_URL}${message.image}`}
                           className="img-fluid"
                           alt="product"
                           style={{

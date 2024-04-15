@@ -120,7 +120,7 @@ export default function MySite() {
                   <img
                     src={
                       template.image
-                        ? `${process.env.NEXT_PUBLIC_BASE_URL_NAME}${template.image}`
+                        ? `${process.env.NEXT_PUBLIC_BASE_URL}${template.image}`
                         : "https://via.placeholder.com/150"
                     }
                     className="card-img-top cursor-pointer"

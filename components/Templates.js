@@ -94,7 +94,7 @@ export default function Templates({ loggedIn }) {
                     {template.image ? (
                       <>
                         <img
-                          src={`${process.env.NEXT_PUBLIC_BASE_URL_NAME}${template.image}`}
+                          src={`${process.env.NEXT_PUBLIC_BASE_URL}${template.image}`}
                           className="card-img-top"
                           alt={`Template ${template.title}`}
                           style={{
