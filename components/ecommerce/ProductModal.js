@@ -49,13 +49,12 @@ const ProductModal = ({ showPModal, setPShowModal, templateId }) => {
       document.getElementById("productForm").reset();
       swal.fire({
         title: "Success",
-        text: "Product added successfully",
+        text: "Product added successfully!",
         icon: "success",
         timer: 2000,
         showConfirmButton: false,
       });
       setPShowModal(false);
-      window.location.reload();
     } catch (error) {
       console.log(error);
       swal.fire({
