@@ -44,14 +44,14 @@ const PublishModal = ({ show, handleClose, templateId }) => {
       })
       .then((response) => {
         swal.fire({
-          title: "Sub domain saved successfully!",
+          title: "Sub domain updated successfully!",
           text: "It can take up to 60 seconds for the changes to take effect.",
           icon: "success",
         });
         fetchDomainDetails();
       })
       .catch((error) => {
-        console.error("Error saving domain details: ", error);
+        console.error("Error updating domain details: ", error);
         swal.fire({
           title: "Error saving sub domain!",
           text: "Please try again later.",
