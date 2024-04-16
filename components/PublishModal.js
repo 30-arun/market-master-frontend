@@ -43,11 +43,20 @@ const PublishModal = ({ show, handleClose, templateId }) => {
         domain_name: domain.domain_name,
       })
       .then((response) => {
-        swal.fire("Success", "Slug saved successfully", "success");
-        fetchDomainDetails();
+        swal.fire({
+          title: "Sub domain saved successfully!",
+          text: "It can take up to 60 seconds for the changes to take effect.",
+          icon: "success",
+        });
+        window.location.reload();
       })
       .catch((error) => {
-        swal.fire("Error", "Slug already taken!", "error");
+        console.error("Error saving domain details: ", error);
+        swal.fire({
+          title: "Error saving sub domain!",
+          text: "Please try again later.",
+          icon: "error",
+        });
       });
   };
 
