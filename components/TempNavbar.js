@@ -124,7 +124,9 @@ const TempNavbar = () => {
                   {profile.name}
                 </span>
                 <Link href="/mysite">
-                  <a className="btn btn-dark ms-3">Dashboard</a>
+                  <a class="btn btn-lg btn-primary px-4 ms-3">
+                    <span class="button-text">Dashboard</span>
+                  </a>
                 </Link>
               </>
             )}
