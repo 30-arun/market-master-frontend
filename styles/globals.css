@@ -177,3 +177,7 @@ hr.h-color {
 		font-size: smaller;
 	}
 }
+
+.collapse {
+	visibility: visible !important;
+}
