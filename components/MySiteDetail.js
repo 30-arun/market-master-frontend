@@ -281,8 +281,8 @@ const MySiteDetail = () => {
                       class="btn btn-light"
                       onClick={() => setShowPublishModal(true)}
                     >
-                      <i class="fa-solid fa-upload me-2"></i>
-                      Publish Site
+                      <i class="fa-solid fa-gear me-2"></i>
+                      Domain Settings
                     </a>
                   </div>
                 </div>
