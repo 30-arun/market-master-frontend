@@ -98,7 +98,6 @@ a {
 hr.h-color {
 	background: #eee;
 }
-
 .sidebar li.active {
 	background: #eee;
 	border-radius: 8px;
@@ -125,7 +124,7 @@ hr.h-color {
 }
 
 .collapse {
-	visibility: visible;
+	visibility: visible !important;
 }
 
 .contact-form-container {
@@ -176,8 +175,4 @@ hr.h-color {
 	.card-text {
 		font-size: smaller;
 	}
-}
-
-.collapse {
-	visibility: visible !important;
 }

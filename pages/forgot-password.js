@@ -1,19 +1,17 @@
-import { useContext } from "react";
-import Link from "next/link";
+import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import Link from "next/link";
 
+function ForgotPassword() {
+	const [loading, setLoading] = useState(false);
+	const { ForgotPasswordUser } = useContext(AuthContext);
 
-function Loginpage() {
-	const { loginUser } = useContext(AuthContext);
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setLoading(true);
 		const email = e.target.email.value;
-		const password = e.target.password.value;
 
-		email.length > 0 && loginUser(email, password);
-
-		console.log(email);
-		console.log(password);
+		email.length > 0 && ForgotPasswordUser(email, setLoading);
 	};
 
 	return (
@@ -44,20 +42,9 @@ function Loginpage() {
 											<div className="card-body p-4 p-lg-5 text-black">
 												<form onSubmit={handleSubmit}>
 													<div className="d-flex align-items-center mb-3 pb-1">
-														{/* <div className="d-flex align-items-center mb-3 pb-1">
-															<i
-																className="fas fa-cubes fa-2x me-3"
-																style={{
-																	color: "#ff6219",
-																}}
-															/>
-															
-														</div> */}
-														<Link href="/">
-															<span className="h2 fw-bold mb-0 cursor-pointer">
-																Market Master
-															</span>
-														</Link>
+														<span className="h2 fw-bold mb-0">
+															Market Master
+														</span>
 													</div>
 													<h5
 														className="fw-normal mb-3 pb-3"
@@ -65,7 +52,7 @@ function Loginpage() {
 															letterSpacing: 1,
 														}}
 													>
-														Sign into your account
+														Password Reset
 													</h5>
 													<div className="form-outline mb-4">
 														<input
@@ -76,27 +63,28 @@ function Loginpage() {
 															placeholder="Email Address"
 														/>
 													</div>
-													<div className="form-outline mb-4">
-														<input
-															type="password"
-															id="form2Example27"
-															className="form-control form-control-lg"
-															name="password"
-															placeholder="Password"
-														/>
-													</div>
 													<div className="pt-1 mb-4">
-														<button
-															className="btn btn-dark btn-lg btn-block"
-															type="submit"
-														>
-															Login
-														</button>
-														<Link href="/forgot-password">
-															<a className="float-end me-2 mt-2">
-																Forgot Password
-															</a>
-														</Link>
+														{loading ? (
+															<button
+																className="btn btn-dark btn-lg btn-block"
+																type="button"
+																disabled
+															>
+																<span
+																	className="spinner-border spinner-border-sm me-2"
+																	role="status"
+																	aria-hidden="true"
+																></span>
+																Loading...
+															</button>
+														) : (
+															<button
+																className="btn btn-dark btn-lg btn-block"
+																type="submit"
+															>
+																Reset Password
+															</button>
+														)}
 													</div>
 
 													<p
@@ -106,12 +94,7 @@ function Loginpage() {
 														}}
 													>
 														Don't have an account?{" "}
-														<Link
-															href="/register"
-															style={{
-																color: "#393f81",
-															}}
-														>
+														<Link href="/register">
 															Register Now
 														</Link>
 													</p>
@@ -141,4 +124,4 @@ function Loginpage() {
 	);
 }
 
-export default Loginpage;
+export default ForgotPassword;

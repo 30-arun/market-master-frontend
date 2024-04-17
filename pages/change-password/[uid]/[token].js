@@ -1,25 +1,28 @@
-import { useContext } from "react";
-import Link from "next/link";
-import AuthContext from "../context/AuthContext";
+import React, { useContext } from "react";
+import AuthContext from "../../../context/AuthContext";
+import { useRouter } from "next/router";
 
+function ChangePassword() {
+	const { ChangePasswordUser } = useContext(AuthContext);
+    const router = useRouter();
 
-function Loginpage() {
-	const { loginUser } = useContext(AuthContext);
+    const { uid, token } = router.query;
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const email = e.target.email.value;
 		const password = e.target.password.value;
+		const password2 = e.target.password2.value;
 
-		email.length > 0 && loginUser(email, password);
-
-		console.log(email);
-		console.log(password);
+		password.length > 0 &&
+			ChangePasswordUser(password, password2, uid, token);
 	};
 
 	return (
 		<div>
 			<>
-				<section className="vh-100 bg-light">
+				<section
+					className="vh-100 bg-light"
+				>
 					<div className="container py-5 h-100">
 						<div className="row d-flex justify-content-center align-items-center h-100">
 							<div className="col col-xl-10">
@@ -43,21 +46,12 @@ function Loginpage() {
 										<div className="col-md-6 col-lg-7 d-flex align-items-center">
 											<div className="card-body p-4 p-lg-5 text-black">
 												<form onSubmit={handleSubmit}>
-													<div className="d-flex align-items-center mb-3 pb-1">
-														{/* <div className="d-flex align-items-center mb-3 pb-1">
-															<i
-																className="fas fa-cubes fa-2x me-3"
-																style={{
-																	color: "#ff6219",
-																}}
-															/>
-															
-														</div> */}
-														<Link href="/">
-															<span className="h2 fw-bold mb-0 cursor-pointer">
+													<div className="d-flex align-items-center pb-1">
+														<div className="d-flex align-items-center mb-3 pb-1">
+															<span className="h2 fw-bold mb-0">
 																Market Master
 															</span>
-														</Link>
+														</div>
 													</div>
 													<h5
 														className="fw-normal mb-3 pb-3"
@@ -65,15 +59,15 @@ function Loginpage() {
 															letterSpacing: 1,
 														}}
 													>
-														Sign into your account
+														Change Password
 													</h5>
 													<div className="form-outline mb-4">
 														<input
-															type="email"
+															type="password"
 															id="form2Example17"
 															className="form-control form-control-lg"
-															name="email"
-															placeholder="Email Address"
+															name="password"
+															placeholder="New Password"
 														/>
 													</div>
 													<div className="form-outline mb-4">
@@ -81,8 +75,8 @@ function Loginpage() {
 															type="password"
 															id="form2Example27"
 															className="form-control form-control-lg"
-															name="password"
-															placeholder="Password"
+															name="password2"
+															placeholder="Confirm Password"
 														/>
 													</div>
 													<div className="pt-1 mb-4">
@@ -90,31 +84,9 @@ function Loginpage() {
 															className="btn btn-dark btn-lg btn-block"
 															type="submit"
 														>
-															Login
+															Change Password
 														</button>
-														<Link href="/forgot-password">
-															<a className="float-end me-2 mt-2">
-																Forgot Password
-															</a>
-														</Link>
 													</div>
-
-													<p
-														className="pb-lg-2"
-														style={{
-															color: "#393f81",
-														}}
-													>
-														Don't have an account?{" "}
-														<Link
-															href="/register"
-															style={{
-																color: "#393f81",
-															}}
-														>
-															Register Now
-														</Link>
-													</p>
 													<a
 														href="#!"
 														className="small text-muted"
@@ -141,4 +113,4 @@ function Loginpage() {
 	);
 }
 
-export default Loginpage;
+export default ChangePassword;
