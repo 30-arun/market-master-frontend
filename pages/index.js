@@ -45,9 +45,9 @@ export default function Index() {
     );
   }
 
-  if (ecommerce) return <Ecommerce />;
   if (domain.includes(hostName)) {
     if (subdomain === hostName) return <Home />;
+    if (ecommerce) return <Ecommerce />;
     return <UserWebsite/>
   }
   if (!domain.includes(hostName)) {
