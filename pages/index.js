@@ -46,6 +46,8 @@ export default function Index() {
 	}
 
 	// // if subdomain ends with string ".com" then it is a top level domain
+  if (subdomain === hostName && !ecommerce)
+    return <Home/>
 	if (!domain.endsWith(hostName)) {
 		if (ecommerce) return <Ecommerce />;
 		return <UserWebsite />;
