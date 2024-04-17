@@ -45,12 +45,28 @@ export default function Index() {
     );
   }
 
-  if (domain.includes(hostName)) {
-    if (subdomain === hostName) return <Home />;
-    if (ecommerce) return <Ecommerce />;
-    return <UserWebsite/>
-  }
+  // if (domain.includes(hostName)) {
+  //   if (subdomain === hostName) return <Home />;
+  //   if (ecommerce) return <Ecommerce />;
+  //   return <UserWebsite />;
+  // }
+  // if (!domain.includes(hostName)) {
+  //   return <UserWebsite />;
+  // }
+
+  if (subdomain === hostName && !ecommerce) return <Home />;
   if (!domain.includes(hostName)) {
+    if (ecommerce) return <Ecommerce />;
     return <UserWebsite />;
   }
+
+  return (
+    <>
+      {ecommerce ? (
+        <Ecommerce />
+      ) : (
+        <>{subdomain === hostName ? <Home /> : <UserWebsite />}</>
+      )}
+    </>
+  );
 }
