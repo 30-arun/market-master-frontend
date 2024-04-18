@@ -48,6 +48,7 @@ export default function Index() {
   if (ecommerce) return <Ecommerce />;
   if (!domain.endsWith(hostName)) return <UserWebsite />;
 
-  if (subdomain === hostName) return <Home />;
+  if (subdomain === process.env.NEXT_PUBLIC_API_SUB_DOMAIN_NAME)
+    return <Home />;
   return <UserWebsite />;
 }
