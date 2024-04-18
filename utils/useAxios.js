@@ -3,32 +3,32 @@ import dayjs from "dayjs";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
-const baseURL = process.env.NEXT_PUBLIC_API_ROUTE_NAME;
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 const useAxios = () => {
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);
 
   const axiosInstance = axios.create({
     baseURL,
-    headers: { Authorization: `Bearer ${authTokens?.access}` }
+    headers: { Authorization: `Bearer ${authTokens?.access}` },
   });
 
-  const decode = (token) =>{
+  const decode = (token) => {
     try {
-        return JSON.parse(window.atob(token.split(".")[1]));
+      return JSON.parse(window.atob(token.split(".")[1]));
     } catch (e) {
-        console.warn("Error decoding token");
+      console.warn("Error decoding token");
     }
-}
+  };
 
-  axiosInstance.interceptors.request.use(async req => {
+  axiosInstance.interceptors.request.use(async (req) => {
     const user = decode(authTokens.access);
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
     if (!isExpired) return req;
 
     const response = await axios.post(`${baseURL}/account/token/refresh/`, {
-      refresh: authTokens.refresh
+      refresh: authTokens.refresh,
     });
     localStorage.setItem("authTokens", JSON.stringify(response.data));
     localStorage.setItem("authTokens", JSON.stringify(response.data));
