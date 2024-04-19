@@ -87,6 +87,11 @@ const DashboardInfo = ({ toggleSidebar }) => {
 					>
 						<span className="navbar-text">
 							{user && profile.name}
+							{user && profile.is_admin && (
+								<span className="badge bg-dark ms-2">
+									Admin
+								</span>
+							)}
 						</span>
 						<span className="navbar-text">Dashboard</span>
 						<ul className="navbar-nav mb-2 mb-lg-0 d-flex">

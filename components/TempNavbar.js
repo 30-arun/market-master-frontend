@@ -138,6 +138,11 @@ const TempNavbar = () => {
 							<>
 								<span className="navbar-text cursor-pointer">
 									{profile.name}
+									{user && profile.is_admin && (
+										<span className="badge bg-dark ms-2">
+											Admin
+										</span>
+									)}
 								</span>
 								<Link href="/mysite">
 									<a class="btn btn-lg btn-primary px-4 ms-3">
