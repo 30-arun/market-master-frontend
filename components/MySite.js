@@ -113,10 +113,15 @@ export default function MySite() {
 	return (
 		<>
 			<div className="container">
-				<h1 className="text-center my-5">Dashboard</h1>
+				<div className="text-center my-5">
+					<h1 className="text-center">Dashboard</h1>
+				</div>
 				<div className="row mb-5">
 					{templates.map((template) => (
-						<div className="col-md-3 mb-4" key={template.id}>
+						<div
+							className="col-lg-3 col-md-6 col-sm-6 mb-4"
+							key={template.id}
+						>
 							<div className="card h-100 template-card">
 								<Link href={`/mysite/${template.id}/website`}>
 									<img
@@ -140,7 +145,7 @@ export default function MySite() {
 									<p className="card-text">
 										{template.description}
 									</p>
-									<div className="d-flex justify-content-between">
+									<div className="d-flex justify-content-between flex-wrap">
 										{template.ecommerce ? (
 											<Link
 												href={`/ecommerce-editor/${template.id}`}

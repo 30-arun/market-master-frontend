@@ -4,13 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
 import useAxios from "../utils/useAxios";
+import AddTemplateModal from "./AddTemplateModal";
 
 const swal = require("sweetalert2");
 
 export default function Templates({ loggedIn }) {
 	const [templates, setTemplates] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [isAdmin, setIsAdmin] = useState({});
+	const [isAdmin, setIsAdmin] = useState(false);
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	const history = useRouter();
 	const { user } = useContext(AuthContext);
@@ -23,6 +27,7 @@ export default function Templates({ loggedIn }) {
 				const response = await axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/store/templates/`
 				);
+
 				setTemplates(response.data);
 			} catch (error) {
 				console.error("There was an error!", error);
@@ -81,6 +86,44 @@ export default function Templates({ loggedIn }) {
 		}
 	};
 
+	const handleDeleteTemp = async (id) => {
+		try {
+			const result = await swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, delete it!",
+			});
+
+			if (result.isConfirmed) {
+				const response = await axios.delete(
+					`${process.env.NEXT_PUBLIC_API_URL}/store/templates/${id}/`
+				);
+				console.log(response.data);
+				setTemplates(
+					templates.filter((template) => template.id !== id)
+				);
+				swal.fire({
+					title: "Deleted!",
+					text: "Your file has been deleted.",
+					icon: "success",
+					timer: 2000,
+					showConfirmButton: false,
+				});
+			}
+		} catch (error) {
+			console.error("There was an error!", error);
+			swal.fire(
+				"Error!",
+				"There was a problem deleting your template.",
+				"error"
+			);
+		}
+	};
+
 	if (loading) {
 		return (
 			<div className="text-center mt-5">
@@ -106,13 +149,23 @@ export default function Templates({ loggedIn }) {
 	return (
 		<>
 			<div className="container w-100">
-				<h1 className="text-center my-5">Templates</h1>
+				<div className="text-center my-5">
+					<h1>Templates</h1>
+					{isAdmin && (
+						<button
+							className="btn btn-dark mt-3"
+							onClick={handleShow}
+						>
+							Add Template
+						</button>
+					)}
+				</div>
 				<div className="row mb-5">
 					{templates.map((template) => (
 						<>
 							{template.customizable === false && (
 								<div
-									className="col-md-3 mb-4"
+									className="col-lg-3 col-md-6 col-sm-6 mb-4"
 									key={template.id}
 								>
 									<div className="card h-100 template-card">
@@ -149,7 +202,7 @@ export default function Templates({ loggedIn }) {
 											<p className="card-text">
 												{template.description}
 											</p>
-											<div className="d-flex justify-content-between">
+											<div className="d-flex justify-content-between flex-wrap">
 												{user ? (
 													<>
 														{loggedIn === true ? (
@@ -189,38 +242,53 @@ export default function Templates({ loggedIn }) {
 														Ecommerce
 													</span>
 												)}
-												<span>
-													{template.ecommerce ? (
-														<Link
-															href={`/ecommerce/${template.id}`}
-														>
-															<a className="btn btn-light btn-sm">
-																Preview
-															</a>
-														</Link>
-													) : (
-														<Link
-															href={`/preview/${template.id}`}
-														>
-															<a className="btn btn-light btn-sm">
-																Preview
-															</a>
-														</Link>
-													)}
-													{isAdmin === true && (
-														<Link
-															href={
-																template.ecommerce
-																	? `/ecommerce-editor-admin/${template.id}`
-																	: `/admin-editor/${template.id}`
-															}
-														>
-															<a className="btn btn-dark btn-sm ms-2">
-																Edit
-															</a>
-														</Link>
-													)}
-												</span>
+												{!template.blank && (
+													<span>
+														{template.ecommerce ? (
+															<Link
+																href={`/ecommerce/${template.id}`}
+															>
+																<a className="btn btn-light btn-sm">
+																	Preview
+																</a>
+															</Link>
+														) : (
+															<Link
+																href={`/preview/${template.id}`}
+															>
+																<a className="btn btn-light btn-sm">
+																	Preview
+																</a>
+															</Link>
+														)}
+														{isAdmin && (
+															<Link
+																href={
+																	template.ecommerce
+																		? `/ecommerce-editor-admin/${template.id}`
+																		: `/admin-editor/${template.id}`
+																}
+															>
+																<a className="btn btn-dark btn-sm ms-2">
+																	Edit
+																</a>
+															</Link>
+														)}
+														{isAdmin &&
+															template.deleted && (
+																<a
+																	className="btn btn-danger btn-sm ms-2"
+																	onClick={() =>
+																		handleDeleteTemp(
+																			template.id
+																		)
+																	}
+																>
+																	Delete
+																</a>
+															)}
+													</span>
+												)}
 											</div>
 										</div>
 									</div>
@@ -230,6 +298,7 @@ export default function Templates({ loggedIn }) {
 					))}
 				</div>
 			</div>
+			<AddTemplateModal show={show} handleClose={handleClose} />
 		</>
 	);
 }

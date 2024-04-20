@@ -18,7 +18,9 @@ export default function Preview() {
 
 	useEffect(() => {
 		if (!router.isReady || !slug) return;
-		const subdomain = window.location.hostname.split(".")[0];
+		const subdomain = window.location.hostname
+			.replace("www.", "")
+			.split(".")[0];
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(

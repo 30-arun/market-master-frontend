@@ -73,7 +73,8 @@ export default function Preview() {
 				<style>{section.css_cotent}</style>
 			</Head>
 			<div dangerouslySetInnerHTML={{ __html: section.html_content }} />
-			<ContactUs id={false} />
+			{!section.deleted && <ContactUs id={false} />}
+
 			<div dangerouslySetInnerHTML={{ __html: section.html_content2 }} />
 		</div>
 	);

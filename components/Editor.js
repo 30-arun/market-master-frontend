@@ -118,6 +118,17 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 				const jsSection =
 					editor.DomComponents.getWrapper().find(".js-section")[0];
 
+				let putDataObj = {
+					css_cotent: editor.getCss(),
+				};
+
+				if (section.blank) {
+					putDataObj.html_content = editor.getHtml();
+				} else {
+					putDataObj.html_content = htmlSection.toHTML();
+					putDataObj.html_content2 = htmlSection2.toHTML();
+				}
+
 				// axios put request
 				const putData = async (e) => {
 					try {
@@ -143,12 +154,7 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 							} else {
 								const response = await axios.put(
 									`${process.env.NEXT_PUBLIC_API_URL}/store/editor-template/${userId}/${templateId}/`,
-									{
-										html_content: htmlSection.toHTML(),
-										html_content2: htmlSection2.toHTML(),
-										js_content: jsSection.toHTML(),
-										css_cotent: editor.getCss(),
-									}
+									putDataObj
 								);
 
 								console.log(response.data);
@@ -229,29 +235,44 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 		`);
 		}
 
+		console.log(editor.getHtml(), "097986876");
+
 		editor.addStyle(`${section.css_cotent}`);
-		editor.addComponents(`
+
+		if (section.blank) {
+			editor.addComponents(`
+		${section.html_content}
+		
+		`);
+
+			editor.addComponents(`
+				<div class=".html-section">
+				</div>
+				`);
+		} else {
+			editor.addComponents(`
         <div class=".html-section">
         ${section.html_content}
         </div>
         `);
-		editor.addComponents(`
+			editor.addComponents(`
         <div class=".html-section1">
         ${section.html_content1}
         </div>
         `);
-		editor.addComponents(`
+			editor.addComponents(`
         <div class=".html-section2">
         ${section.html_content2}
         </div>
         `);
-		editor.addComponents(`
+			editor.addComponents(`
         <div class=".js-section">
         <script>
         ${section.js_content}
         </script>
         </div>
         `);
+		}
 
 		// Clean up
 		return () => {

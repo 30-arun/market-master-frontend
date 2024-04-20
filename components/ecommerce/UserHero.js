@@ -8,7 +8,9 @@ export default function Hero() {
 
 	useEffect(() => {
 		const domain = window.location.hostname.replace("www.", "");
-		let subdomain = window.location.hostname.split(".")[0];
+		let subdomain = window.location.hostname
+			.replace("www.", "")
+			.split(".")[0];
 
 		if (!domain.endsWith(process.env.NEXT_PUBLIC_HOST_NAME)) {
 			subdomain = domain;

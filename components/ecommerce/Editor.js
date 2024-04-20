@@ -82,8 +82,6 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 			category: "Basic",
 		});
 
-		console.log(editor.getProjectData());
-
 		editor.Panels.addButton("options", {
 			id: "save-btn",
 			className: "fa fa-save",
@@ -181,6 +179,7 @@ const GrapesJSEditor = ({ templateId, userId }) => {
 			},
 		});
 		editor.addStyle(`${section.css_cotent}`);
+
 		editor.addComponents(`
             <div class=".html-section1">
             ${section.html_content1}

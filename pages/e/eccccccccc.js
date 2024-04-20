@@ -14,7 +14,9 @@ function Ecommerce() {
 	const [slugData, setSlugData] = useState({});
 	const dispatch = useDispatch();
 	const productsList = useSelector((state) => state.productsListReducer);
-	const subdomain = window.location.hostname.split(".")[0];
+	const subdomain = window.location.hostname
+		.replace("www.", "")
+		.split(".")[0];
 	const { error, loading, products } = productsList;
 
 	useEffect(() => {

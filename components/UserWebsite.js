@@ -11,14 +11,18 @@ const hostName = process.env.NEXT_PUBLIC_HOST_NAME;
 export default function UserWebsite() {
 	const [section, setSection] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
 	const domain = window.location.hostname.replace("www.", "");
-	let subdomain = window.location.hostname.split(".")[0];
+	let subdomain = window.location.hostname.replace("www.", "").split(".")[0];
+	const router = useRouter();
 
 	if (!domain.endsWith(hostName)) {
 		subdomain = domain;
 	}
 
 	useEffect(() => {
+		if (!router.isReady) return;
+
 		const fetchData = async () => {
 			setLoading(true);
 			try {
@@ -31,11 +35,14 @@ export default function UserWebsite() {
 			} catch (error) {
 				console.error("There was an error!", error);
 				setLoading(false);
+				setError(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
 		fetchData();
-	}, []);
+	}, [router.isReady]);
 
 	function hexToRgb(hex) {
 		// Check if the input is a valid hexadecimal color code
@@ -66,12 +73,22 @@ export default function UserWebsite() {
 	const rgbColorPr = hexToRgb(section?.color_theme_pr);
 	const rgbColorSc = hexToRgb(section?.color_theme_sc);
 
-	if (loading || !section) {
+	if (loading) {
 		return (
 			<div class="d-flex justify-content-center">
 				<div class="spinner-grow" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div className="my-5 text-center">
+				<h1 style={{ fontSize: "150px" }}>404</h1>
+				<h2>There was an error!</h2>
+				<p>{error.message}</p>
 			</div>
 		);
 	}
@@ -104,7 +121,7 @@ export default function UserWebsite() {
 					href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Reddit+Mono:wght@200..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
 					rel="stylesheet"
 				/>
-				{section.font_family && (
+				{section?.font_family && (
 					<style>
 						{`
               .bgColor {
@@ -119,16 +136,16 @@ export default function UserWebsite() {
             `}
 					</style>
 				)}
-				<style>{section.css_cotent}</style>
+				<style>{section?.css_cotent}</style>
 			</Head>
 			<div className="bgColor">
 				<div
-					dangerouslySetInnerHTML={{ __html: section.html_content }}
+					dangerouslySetInnerHTML={{ __html: section?.html_content }}
 				/>
-				{section.barber && <BookApp id={section.id} />}
-				<ContactUs id={section.id} />
+				{section?.barber && <BookApp id={section?.id} />}
+				{section?.blank===false && <ContactUs id={section?.id} />}
 				<div
-					dangerouslySetInnerHTML={{ __html: section.html_content2 }}
+					dangerouslySetInnerHTML={{ __html: section?.html_content2 }}
 				/>
 			</div>
 		</>
